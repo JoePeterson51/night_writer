@@ -77,7 +77,8 @@ class NightWriter
     end
   end
 
-  def wrap(text)
-    text.scan(/.{1,2}/)
+  def wrap(filename)
+    text = File.read(filename).delete("\n")
+    text.scan(/.{1,80}/)
   end
 end

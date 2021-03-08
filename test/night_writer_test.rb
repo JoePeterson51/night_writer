@@ -28,10 +28,8 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_it_can_wrap_text
-    text = "12345"
     night_writer = NightWriter.new
-    expected = ["12", "34", "56", "7", "8", "9"]
-    puts expected
-    assert_equal expected, night_writer.wrap(text)
+require 'pry'; binding.pry
+    assert_equal ["................................................................................", "1"], night_writer.wrap("wrap_test.txt")
   end
 end
