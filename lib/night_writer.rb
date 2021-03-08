@@ -45,6 +45,14 @@ class NightWriter
   end
 
   def translate
+
+    new_dictionary = {
+                      "h" => ["0.", "00", ".."],
+                      "e" => ["0.", ".0", ".."],
+                      "l" => ["0.", "0.", "0."],
+                      "o" => ["0.", ".0", "0."]
+                    }
+
     translation = File.new("braille.txt", "w")
     original = File.open("message.txt")
     message = []
@@ -60,15 +68,24 @@ class NightWriter
 
     broken.map do |letter|
       broken[0]
-    @dictionary.map do |key, value|
+    new_dictionary.map do |key, value|
         if key == letter
           braille << value
         end
       end
     end
 
+
+
+    braille.map do |letter|
+      letter.map do |line|
+
+      end
+    end
+
+
     braille.each do |line|
-      translation.print(line)
+      translation.puts(line)
     end
   end
 end
