@@ -1,6 +1,7 @@
 class NightWriter
-  attr_reader :dictionary
+  attr_reader :dictionary, :filename
   def initialize
+    @filename = ARGV
     @dictionary = {
                    "a" => "0.\n..\n..",
                    "b" => "0.\n0.\n..",
@@ -32,10 +33,6 @@ class NightWriter
                  }
   end
 
-  def filename
-    ARGV
-  end
-
   def read_file(file_name)
     File.read(file_name).strip
   end
@@ -45,5 +42,20 @@ class NightWriter
     total_characters = text.strip.length
     puts "Created '#{filename[1]}' containing #{total_characters} characters"
     File.read(filename[0])
+  end
+
+  def translator
+    translation = File.new("braille.txt", "w")
+    original = File.open("message.txt")
+    message = []
+    braille = []
+
+    while (line = original.gets)
+      message << line.chomp
+    end
+
+    braille.each do |line|
+      translation.print(line)
+    end
   end
 end
