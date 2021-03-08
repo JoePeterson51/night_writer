@@ -1,21 +1,19 @@
 class NightWriter
   def initialize
-    @filename = ARGV
   end
 
   def filename
     ARGV
   end
 
-  def read_file
-    File.read("message.txt").strip
+  def read_file(file_name)
+    File.read(file_name).strip
   end
 
   def count
-    text = File.read("message.txt").strip
+    text = File.read(filename[0])
     total_characters = text.strip.length
-    puts "Created 'braille.txt' containing #{total_characters} characters"
-    File.read("message.txt").strip
+    puts "Created '#{filename[1]}' containing #{total_characters} characters"
+    File.read(filename[0])
   end
-
 end
