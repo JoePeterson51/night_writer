@@ -14,4 +14,10 @@ class NightWriterTest < Minitest::Test
 
     assert_equal "Created 'braille.txt' containing 256 characters", night_writer.read_file("test_message.txt")
   end
+
+  def test_dictionary
+    night_writer = NightWriter.new
+
+    assert_equal "0.\n..\n..", night_writer.dictionary["a"]
+  end
 end
