@@ -3,33 +3,33 @@ class NightWriter
   def initialize
     @filename = ARGV
     @dictionary = {
-                   "a" => "0.\n..\n..",
-                   "b" => "0.\n0.\n..",
-                   "c" => "00\n..\n..",
-                   "d" => "00\n.0\n..",
-                   "e" => "0.\n.0\n..",
-                   "f" => "00\n0.\n..",
-                   "g" => "00\n00\n..",
-                   "h" => "0.\n00\n..",
-                   "i" => ".0\n0.\n..",
-                   "j" => ".0\n00\n..",
-                   "k" => "0.\n..\n0.",
-                   "l" => "0.\n0.\n0.",
-                   "m" => "00\n..\n0.",
-                   "n" => "00\n.0\n0.",
-                   "o" => "0.\n.0\n0.",
-                   "p" => "00\n0.\n0.",
-                   "q" => "00\n00\n0.",
-                   "r" => "0.\n00\n0.",
-                   "s" => ".0\n0.\n0.",
-                   "t" => ".0\n00\n0.",
-                   "u" => "0.\n..\n00",
-                   "v" => "0.\n0.\n00",
-                   "w" => ".0\n00\n.0",
-                   "x" => "00\n..\n00",
-                   "y" => "00\n.0\n00",
-                   "z" => "0.\n.0\n00",
-                   " " => "..\n..\n.."
+                   "a" => ["0.", "..", ".."],
+                   "b" => ["0.", "0.", ".."],
+                   "c" => ["00", "..", ".."],
+                   "d" => ["00", ".0", ".."],
+                   "e" => ["0.", ".0", ".."],
+                   "f" => ["00", "0.", ".."],
+                   "g" => ["00", "00", ".."],
+                   "h" => ["0.", "00", ".."],
+                   "i" => [".0", "0.", ".."],
+                   "j" => [".0", "00", ".."],
+                   "k" => ["0.", "..", "0."],
+                   "l" => ["0.", "0.", "0."],
+                   "m" => ["00", "..", "0."],
+                   "n" => ["00", ".0", "0."],
+                   "o" => ["0.", ".0", "0."],
+                   "p" => ["00", "0.", "0."],
+                   "q" => ["00", "00", "0."],
+                   "r" => ["0.", "00", "0."],
+                   "s" => [".0", "0.", "0."],
+                   "t" => [".0", "00", "0."],
+                   "u" => ["0.", "..", "00"],
+                   "v" => ["0.", "0.", "00"],
+                   "w" => [".0", "00", ".0"],
+                   "x" => ["00", "..", "00"],
+                   "y" => ["00", ".0", "00"],
+                   "z" => ["0.", ".0", "00"],
+                   " " => ["..", "..", ".."]
                  }
   end
 
@@ -45,47 +45,38 @@ class NightWriter
   end
 
   def translate
+    braille = File.new("braille.txt", "w")
+    message = File.open("message.txt")
+    original = []
+    translation = []
 
-    new_dictionary = {
-                      "h" => ["0.", "00", ".."],
-                      "e" => ["0.", ".0", ".."],
-                      "l" => ["0.", "0.", "0."],
-                      "o" => ["0.", ".0", "0."]
-                    }
-
-    translation = File.new("braille.txt", "w")
-    original = File.open("message.txt")
-    message = []
-    braille = []
-
-    while (line = original.gets)
-      message << line.chomp
+    while (line = message.gets)
+      original << line.chomp
     end
 
-    broken = message.flat_map do |line|
+    broken = original.flat_map do |line|
       line.split("")
     end
 
     broken.map do |letter|
       broken[0]
-    new_dictionary.map do |key, value|
+    @dictionary.map do |key, value|
         if key == letter
-          braille << value
+          translation << value
         end
       end
     end
 
-
-
-    braille.map do |letter|
-      letter.map do |line|
-
-      end
+    translation.each do |line|
+      braille.print(line[0])
     end
-
-
-    braille.each do |line|
-      translation.puts(line)
+    braille.print"\n"
+    translation.each do |line|
+      braille.print(line[1])
+    end
+    braille.print"\n"
+    translation.each do |line|
+      braille.print(line[2])
     end
   end
 end
