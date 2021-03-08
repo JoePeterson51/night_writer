@@ -9,21 +9,21 @@ class NightWriterTest < Minitest::Test
     assert_instance_of NightWriter, night_writer
   end
 
-  def test_it_can_read_message
-    night_writer = NightWriter.new
-
-    assert_equal "h", night_writer.read_file("test_message.txt")
-  end
-
   def test_dictionary
     night_writer = NightWriter.new
 
-    assert_equal "0.\n..\n..", night_writer.dictionary["a"]
+    assert_equal ["0.", "..", ".."], night_writer.dictionary["a"]
   end
 
   def test_it_can_translate_1_letter
     night_writer = NightWriter.new
 
-    assert_equal ["0.\n00\n.."], night_writer.translate
+    assert_equal "0.\n00\n..", File.read("test/test_braille.txt")
+  end
+
+  def test_it_can_translate_5_letters
+    night_writer = NightWriter.new
+
+    assert_equal "0.0.0.0.0.\n00.00.0..0\n....0.0.0.", File.read("test/test_braille2.txt")
   end
 end

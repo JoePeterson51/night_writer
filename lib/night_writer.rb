@@ -33,9 +33,6 @@ class NightWriter
                  }
   end
 
-  def read_file(file_name)
-    File.read(file_name).strip
-  end
 
   def count
     text = File.read(filename[0])
@@ -45,8 +42,8 @@ class NightWriter
   end
 
   def translate
-    braille = File.new("braille.txt", "w")
-    message = File.open("message.txt")
+    braille = File.new(filename[1], "w")
+    message = File.open(filename[0])
     original = []
     translation = []
 
