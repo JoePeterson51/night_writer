@@ -44,19 +44,19 @@ class NightWriter
   def translate
     braille = File.new(filename[1], "w")
     message = File.open(filename[0])
-    original = []
+    original_message = []
     translation = []
 
     while (line = message.gets)
-      original << line.chomp
+      original_message << line.chomp
     end
 
-    broken = original.flat_map do |line|
+    split_message = original_message.flat_map do |line|
       line.split("")
     end
 
-    broken.map do |letter|
-      broken[0]
+    split_message.map do |letter|
+      split_message[0]
     @dictionary.map do |key, value|
         if key == letter
           translation << value
@@ -75,5 +75,9 @@ class NightWriter
     translation.each do |line|
       braille.print(line[2])
     end
+  end
+
+  def wrap(text)
+    text.scan(/.{1,2}/)
   end
 end

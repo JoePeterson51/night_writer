@@ -26,4 +26,12 @@ class NightWriterTest < Minitest::Test
 
     assert_equal "0.0.0.0.0.\n00.00.0..0\n....0.0.0.", File.read("test/test_braille2.txt")
   end
+
+  def test_it_can_wrap_text
+    text = "12345"
+    night_writer = NightWriter.new
+    expected = ["12", "34", "56", "7", "8", "9"]
+    puts expected
+    assert_equal expected, night_writer.wrap(text)
+  end
 end
