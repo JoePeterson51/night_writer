@@ -15,6 +15,12 @@ class NightWriterTest < Minitest::Test
     assert_equal ["0.", "..", ".."], night_writer.dictionary["a"]
   end
 
+  def test_it_can_split_message
+    night_writer = NightWriter.new
+
+    assert_equal ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"], night_writer.split_message
+  end
+
   def test_it_can_translate_1_letter
     night_writer = NightWriter.new
 
@@ -28,8 +34,9 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_it_can_wrap_text
+    skip
     night_writer = NightWriter.new
-require 'pry'; binding.pry
-    assert_equal ["................................................................................", "1"], night_writer.wrap("wrap_test.txt")
+
+    assert_equal [".....", ".....", ".....", "1", "2", "3"], night_writer.wrap("wrap_test.txt")
   end
 end

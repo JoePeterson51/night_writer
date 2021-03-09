@@ -1,7 +1,10 @@
 class NightWriter
-  attr_reader :dictionary, :filename
+  attr_reader :dictionary, :filename, :braille, :split_message, :translation
   def initialize
     @filename = ARGV
+    @split_message = []
+    @translation = []
+    @braille = File.new(filename[1], "w")
     @dictionary = {
                    "a" => ["0.", "..", ".."],
                    "b" => ["0.", "0.", ".."],
@@ -38,47 +41,44 @@ class NightWriter
     text = File.read(filename[0])
     total_characters = text.strip.length
     puts "Created '#{filename[1]}' containing #{total_characters} characters"
-    File.read(filename[0])
+  end
+
+  def split_message
+    @split_message = File.read(filename[0]).chomp.split("")
   end
 
   def translate
-    braille = File.new(filename[1], "w")
-    message = File.open(filename[0])
-    original_message = []
-    translation = []
-
-    while (line = message.gets)
-      original_message << line.chomp
-    end
-
-    split_message = original_message.flat_map do |line|
-      line.split("")
-    end
-
-    split_message.map do |letter|
-      split_message[0]
+    @split_message.map do |letter|
+      @split_message[0]
     @dictionary.map do |key, value|
         if key == letter
-          translation << value
+          @translation << value
         end
       end
     end
+  end
 
-    translation.each do |line|
-      braille.print(line[0])
+  def print_braille
+    @translation.each do |line|
+      @braille.print(line[0])
     end
-    braille.print"\n"
-    translation.each do |line|
-      braille.print(line[1])
+    @braille.print"\n"
+    @translation.each do |line|
+      @braille.print(line[1])
     end
-    braille.print"\n"
-    translation.each do |line|
-      braille.print(line[2])
+    @braille.print"\n"
+    @translation.each do |line|
+      @braille.print(line[2])
     end
   end
 
+
+
   def wrap(filename)
-    text = File.read(filename).delete("\n")
-    text.scan(/.{1,80}/)
+
+    text = File.read(filename)
+    text.scan(/.{1,5}/).join("\n")
+    # text.scan(/.{1,5}/)
+    # require 'pry'; binding.pry
   end
 end
