@@ -36,7 +36,6 @@ class NightWriter
                  }
   end
 
-
   def count
     text = File.read(filename[0])
     total_characters = text.strip.length
@@ -49,8 +48,7 @@ class NightWriter
 
   def translate
     @split_message.map do |letter|
-      @split_message[0]
-    @dictionary.map do |key, value|
+        @dictionary.map do |key, value|
         if key == letter
           @translation << value
         end
@@ -72,13 +70,7 @@ class NightWriter
     end
   end
 
-
-
-  def wrap(filename)
-
-    text = File.read(filename)
-    text.scan(/.{1,5}/).join("\n")
-    # text.scan(/.{1,5}/)
-    # require 'pry'; binding.pry
+  def wrap(text)
+    text.scan(/.{1,4}/).join("\n")
   end
 end

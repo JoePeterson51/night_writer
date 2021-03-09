@@ -23,7 +23,7 @@ class NightWriterTest < Minitest::Test
 
   def test_it_can_translate_1_letter
     night_writer = NightWriter.new
-
+# require 'pry'; binding.pry
     assert_equal "0.\n00\n..", File.read("test/test_braille.txt")
   end
 
@@ -34,9 +34,13 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_it_can_wrap_text
-    skip
+    # skip
     night_writer = NightWriter.new
+    text = "0.0.........0.0........."
 
-    assert_equal [".....", ".....", ".....", "1", "2", "3"], night_writer.wrap("wrap_test.txt")
+
+    expected = "0.0.\n....\n....\n0.0.\n....\n...."
+
+    assert_equal expected, night_writer.wrap(text)
   end
 end
